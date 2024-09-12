@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    entrypoint: docker-entrypoint.sh
+    command: rabbitmq-server
+    hostname: rabbitmq
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=tu_contraseña
+      - RABBITMQ_DEFAULT_VHOST=default
+      - RABBITMQ_DEFAULT_USER=tu_usuario
+      - RABBITMQ_DEFAULT_PASS=tu_contraseña
+    networks:
+      - caddy
+    labels:
+      - caddy=tu.dominio.com
+      - caddy.reverse_proxy="{{upstreams 15672}}"
+volumes:
+  rabbitmq_data:
+    name: rabbitmq_data
+networks:
+  caddy:
+    external: true

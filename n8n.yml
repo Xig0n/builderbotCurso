@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    networks:
+      - caddy
+    restart: always
+    labels:
+      - caddy=n8n.DOMINIO
+      - caddy.reverse_proxy="{{upstreams 8080}}"
+    environment:
+      - N8N_HOST=n8n.DOMINIO
+      - N8N_PORT=8080
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://n8n.DOMINIO
+      - GENERIC_TIMEZONE=Europe/Berlin
+      - NODE_FUNCTION_ALLOW_EXTERNAL=*
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - /mnt/NAS/docker/n8n/n8n-files:/files
+
+volumes:
+  n8n_data:
+
+networks:
+  caddy:
+    name: caddy
+    external: true

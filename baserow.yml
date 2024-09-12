@@ -1,0 +1,30 @@
+version: "3.4"
+services:
+  baserow:
+    container_name: baserow
+    image: baserow/baserow:1.25.1
+    environment:
+      BASEROW_PUBLIC_URL: 'https://sub.dominio.com' 
+      EMAIL_SMTP: 'True'
+      EMAIL_SMTP_HOST: ''
+      EMAIL_SMTP_PORT: ''
+      FROM_EMAIL: 'MAIL'
+      EMAIL_SMTP_USER: 'MAIL' 
+      EMAIL_SMTP_PASSWORD: 'PASSWORD' 
+      EMAIL_SMTP_USE_TLS: ''
+    restart: always
+    networks:
+      - caddy
+    labels:
+      - caddy=sub.dominio.com
+      - caddy.reverse_proxy="{{upstreams 80}}"
+      
+    volumes:
+      - baserow_data:/baserow/data
+volumes:
+  baserow_data:
+
+networks:
+  caddy:
+    name: caddy
+    external: true
