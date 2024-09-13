@@ -42,7 +42,7 @@ services:
       - AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES=true
       # RAabbitMQ Config
       - RABBITMQ_ENABLED=true
-      - RABBITMQ_URI=amqp://guest:guest@rabbitmq:5672
+      - RABBITMQ_URI=amqp://user:pass@rabbitmq:5672/default
       - RABBITMQ_EXCHANGE_NAME=evolution_exchange
     command: ['node', './dist/src/main.js']
     labels:

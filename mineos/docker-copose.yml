@@ -1,0 +1,17 @@
+version: "3"
+services:
+    mineos:
+        tty: true
+        container_name: mineos
+        ports:
+            - 8443:8443
+            - 25565:25565
+        environment:
+            - MINEOS_UN
+            - MINEOS_PW
+        volumes:
+            - mineos:/var/games/minecraft
+        restart: unless-stopped
+        image: hexparrot/mineos:latest
+volumes:
+    mineos
